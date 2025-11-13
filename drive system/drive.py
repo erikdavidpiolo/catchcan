@@ -1,28 +1,38 @@
 from machine import Pin,PWM
-import time 
+from utime import sleep
 
-driver1_in1 = Pin(1,Pin.OUT)
-driver1_in2 = Pin(2,Pin.OUT)
-driver1_in3 = Pin(4,Pin.OUT)
-driver1_in4 = Pin(5,Pin.OUT)
-driver1_enB = PWM(Pin(6))
-driver1_enA = PWM(Pin(7))
+class Motor:
+    def __init__(self, speed, reverse, pin1, pin2, en):
+        self.speed =  speed
+        self.reverse = reverse
+        self.in1 = Pin(pin1, Pin.OUT)
+        self.in2 = Pin(pin2, Pin.OUT)
+        self.en = PWM(Pin(en))
+        self.en.freq(5000)
+        self.en.duty_u16(self.speed)
+
+    def forward(self):
+        self.in1.value(1)
+        self.in2.value(0)
+
+    def backward(self):
+        self.in1.value(0)
+        self.in2.value(1)
+
+    def brake(self):
+        self.in1.value(1)
+        self.in2.value(1) 
+
+m1 = Motor(50000, "brake", 0, 1, 2)
+m2 = Motor(50000, "brake", 3, 4, 5)
+m3 = Motor(50000, "brake", 6, 7, 8)
+m4 = Motor(50000, "brake", 9, 10, 11)
 
 while True:
     print("Turning on motor")
-    driver1_in1.value(1)
-    driver1_in2.value(1)  
-    driver1_in3.value(1)
-    driver1_in4.value(1)
-
-    for duty in range(0,65535,100):
-        print("duty:" + str(duty))
-        driver1_enA.duty_u16(duty)
-        driver1_enB.duty_u16(duty)
-        time.sleep_ms(5)
-
-    for duty in range(65535,0,-100):
-        print("duty:" + str(duty))
-        driver1_enA.duty_u16(duty)
-        driver1_enB.duty_u16(duty)
-        time.sleep_ms(5)
+    m1.forward()
+    sleep(2)
+    m1.brake()
+    sleep(2)
+    m1.backward()
+    sleep(2)
