@@ -23,25 +23,54 @@ class Motor:
         self.in1.value(1)
         self.in2.value(1) 
 
-m1 = Motor(50000, "brake", 0, 1, 2)
-m2 = Motor(50000, "brake", 3, 4, 5)
-m3 = Motor(50000, "brake", 6, 7, 8)
-m4 = Motor(50000, "brake", 9, 10, 11)
+m1 = Motor(65535, "brake", 0, 1, 2)
+m2 = Motor(65535, "brake", 3, 4, 5)
+m3 = Motor(65535, "brake", 6, 7, 8)
+m4 = Motor(65535, "brake", 9, 10, 11)
 
-while True:
-    print("Turning on motor")
+def drive_forward():
     m1.forward()
     m2.forward()
     m3.forward()
     m4.forward()
-    sleep(2)
-    m1.brake()
-    m2.brake()
-    m3.brake()
-    m4.brake()
-    sleep(2)
+
+def drive_backward():
     m1.backward()
     m2.backward()
     m3.backward()
     m4.backward()
+
+def drive_left():
+    m1.backward()
+    m2.forward()
+    m3.backward()
+    m4.forward()
+
+def drive_right():
+    m1.forward()
+    m2.backward()
+    m3.forward()
+    m4.backward()
+
+def stop():
+    m1.brake()
+    m2.brake()
+    m3.brake()
+    m4.brake()
+
+while True:
+    print("Turning on motor")
+    drive_forward()
+    sleep(2)
+    print("Reversing motor")
+    drive_backward()
+    sleep(2)
+    print("Turning left")
+    drive_left()
+    sleep(2)
+    print("Turning right")
+    drive_right()
+    sleep(2)
+    print("Stopping motor")
+    stop()
     sleep(2)
