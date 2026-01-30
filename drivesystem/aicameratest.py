@@ -40,7 +40,7 @@ uart.write("READY\n")
 print("Ready")
 
 
-m1 = Motor(65535, "brake", 13, 14, 15)
+m1 = Motor(65535, "brake", 1, 2, 3)
 m2 = Motor(65535, "brake", 3, 4, 5)
 m3 = Motor(65535, "brake", 6, 7, 8)
 m4 = Motor(65535, "brake", 9, 10, 11)
@@ -54,16 +54,20 @@ while True:
             except:
                 cmd = ""
 
-            if cmd == "LED_ON":
+            if cmd == "FIRE":
                 led.value(1)
-                m3.forward()
-                m4.forward()
+                m1.forward()
+                # m2.forward()
+                # m3.forward()
+                # m4.forward()
                 uart.write("OK_ON\n")
 
             elif cmd == "LED_OFF":
                 led.value(0)
-                m4.brake()
-                m3.brake()
+                m1.brake()
+                # m2.brake()
+                # m4.brake()
+                # m3.brake()
                 uart.write("OK_OFF\n")
 
             else:
