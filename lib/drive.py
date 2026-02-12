@@ -72,5 +72,3 @@ for motor in motors:
     print("Turning off motor {}".format(motors.index(motor)))
     motor.brake()
     sleep(2)
-
-   
