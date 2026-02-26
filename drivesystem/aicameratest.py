@@ -38,6 +38,7 @@ led.value(0)          # LED OFF at startup
 # Optional: let the Pi know Pico is alive
 uart.write("READY\n")
 print("Ready")
+<<<<<<< Updated upstream
 
 
 m1 = Motor(65535, "brake", 13, 14, 15)
@@ -45,6 +46,12 @@ m2 = Motor(65535, "brake", 3, 4, 5)
 m3 = Motor(65535, "brake", 6, 7, 8)
 m4 = Motor(65535, "brake", 9, 10, 11)
 
+=======
+m1 = Motor(65535, "brake", 26, 27, 22)
+m2 = Motor(65535, "brake", 13, 14, 15)
+m3 = Motor(65535, "brake", 7, 6, 8)
+m4 = Motor(65535, "brake", 19, 20, 18)
+>>>>>>> Stashed changes
 while True:
     if uart.any():
         line = uart.readline()
