@@ -1,0 +1,37 @@
+from machine import UART, Pin
+import time
+
+# UART0: GP0 = TX, GP1 = RX
+uart = UART(0, baudrate=115200, tx=Pin(0), rx=Pin(1))
+
+# LED pin (CHANGE THIS if needed)
+LED_PIN = 16          # GP16 for external LED
+# LED_PIN = 25        # uncomment this instead for built-in LED
+
+led = Pin(LED_PIN, Pin.OUT)
+led.value(0)          # LED OFF at startup
+
+# Optional: let the Pi know Pico is alive
+uart.write("READY\n")
+
+while True:
+    if uart.any():
+        line = uart.readline()
+        if line:
+            try:
+                cmd = line.decode("utf-8").strip()
+            except:
+                cmd = ""
+
+            if cmd == "LED_ON":
+                led.value(1)
+                uart.write("OK_ON\n")
+
+            elif cmd == "LED_OFF":
+                led.value(0)
+                uart.write("OK_OFF\n")
+
+            else:
+                uart.write("UNKNOWN\n")
+
+    time.sleep(0.01)
